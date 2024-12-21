@@ -65,30 +65,32 @@ class FinancialAgent:
             llm=llm,
         )
 
-    @agent
-    def on_chain_data_specialist(self) -> Agent:
-        return Agent(
-            config=self.agents_config["on_chain_data_specialist"],
-            verbose=True,
-            allow_delegation=True,
-            tools=[self.search_tool, self.serper_tool],
-            llm=llm,
-        )
+    # @agent
+    # def on_chain_data_specialist(self) -> Agent:
+    #     return Agent(
+    #         config=self.agents_config["on_chain_data_specialist"],
+    #         verbose=True,
+    #         allow_delegation=True,
+    #         tools=[self.search_tool, self.serper_tool],
+    #         llm=llm,
+    #     )
 
-    @agent
-    def economic_trends_advisor(self) -> Agent:
-        return Agent(
-            config=self.agents_config["economic_trends_advisor"],
-            verbose=True,
-            allow_delegation=True,
-            tools=[self.search_tool, self.serper_tool],
-            llm=llm,
-        )
+    # @agent
+    # def economic_trends_advisor(self) -> Agent:
+    #     return Agent(
+    #         config=self.agents_config["economic_trends_advisor"],
+    #         verbose=True,
+    #         allow_delegation=True,
+    #         tools=[self.search_tool, self.serper_tool],
+    #         llm=llm,
+    #     )
 
     @task
     def market_analysis_task(self) -> Task:
         return Task(
             config=self.tasks_config["market_analysis_task"],
+            async_execution=True,
+            output_file="reports/Market_Analysis.md",
         )
 
     @task
@@ -96,6 +98,7 @@ class FinancialAgent:
         return Task(
             config=self.tasks_config["sentiment_analysis_task"],
             async_execution=True,
+            output_file="reports/Sentiment_Analysis.md",
         )
 
     @task
@@ -103,6 +106,7 @@ class FinancialAgent:
         return Task(
             config=self.tasks_config["risk_assessment_task"],
             async_execution=True,
+            output_file="reports/Risk_Assessment.md",
         )
 
     @task
@@ -110,27 +114,34 @@ class FinancialAgent:
         return Task(
             config=self.tasks_config["technical_analysis_task"],
             async_execution=True,
+            output_file="reports/Technical_Analysis.md",
         )
 
-    @task
-    def on_chain_analysis_task(self) -> Task:
-        return Task(
-            config=self.tasks_config["on_chain_analysis_task"],
-            async_execution=True,
-        )
+    # @task
+    # def on_chain_analysis_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config["on_chain_analysis_task"],
+    #         async_execution=True,
+    #     )
 
-    @task
-    def economic_impact_task(self) -> Task:
-        return Task(
-            config=self.tasks_config["economic_impact_task"],
-            async_execution=True,
-        )
+    # @task
+    # def economic_impact_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config["economic_impact_task"],
+    #         async_execution=True,
+    #     )
 
     @task
     def investment_recommendation_task(self) -> Task:
         return Task(
             config=self.tasks_config["investment_recommendation_task"],
-            output_file="Recommendation.md",
+            context=[
+                self.market_analysis_task(),
+                self.sentiment_analysis_task(),
+                self.risk_assessment_task(),
+                self.technical_analysis_task(),
+            ],
+            output_file="reports/Recommendation.md",
         )
 
     @crew
@@ -138,8 +149,8 @@ class FinancialAgent:
         """Creates the FinancialAgent crew"""
 
         return Crew(
-            agents=self.agents,  # Automatically created by the @agent decorator
-            tasks=self.tasks,  # Automatically created by the @task decorator
+            agents=self.agents,
+            tasks=self.tasks,
             process=Process.hierarchical,
             manager_llm=llm,
             verbose=True,
