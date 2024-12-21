@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import warnings
+from datetime import datetime
 
 from financial_agent.crew import FinancialAgent
 
@@ -16,8 +17,10 @@ def run():
     """
     Run the crew.
     """
+    todays_date = datetime.now().strftime("%Y-%m-%d")
     inputs = {
         "crypto_coin": "ETH",
         "investment_strategy": "Day Trading",
+        "date": f"{todays_date}",
     }
     FinancialAgent().crew().kickoff(inputs=inputs)
