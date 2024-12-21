@@ -1,62 +1,147 @@
-from crewai import Agent, Crew, Process, Task
+from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
+from crewai_tools import ScrapeWebsiteTool, SerperDevTool
+from dotenv import load_dotenv
+import os
 
-# If you want to run a snippet of code before or after the crew starts, 
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+load_dotenv()
+
+llm = LLM(
+    model=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
+    api_key=os.getenv("AZURE_OPENAI_KEY"),
+    api_version=os.getenv("AZURE_OPENAI_VERSION"),
+    base_url=os.getenv("AZURE_OPENAI_ENDPOINT"),
+)
+# llm = LLM(model="ollama/llama3.1", base_url="http://localhost:11434")
+
 
 @CrewBase
-class FinancialAgent():
-	"""FinancialAgent crew"""
+class FinancialAgent:
+    """FinancialAgent crew"""
 
-	# Learn more about YAML configuration files here:
-	# Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-	# Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-	agents_config = 'config/agents.yaml'
-	tasks_config = 'config/tasks.yaml'
+    agents_config = "config/agents.yaml"
+    tasks_config = "config/tasks.yaml"
 
-	# If you would like to add tools to your agents, you can learn more about it here:
-	# https://docs.crewai.com/concepts/agents#agent-tools
-	@agent
-	def researcher(self) -> Agent:
-		return Agent(
-			config=self.agents_config['researcher'],
-			verbose=True
-		)
+    search_tool = ScrapeWebsiteTool()
+    serper_tool = SerperDevTool()
 
-	@agent
-	def reporting_analyst(self) -> Agent:
-		return Agent(
-			config=self.agents_config['reporting_analyst'],
-			verbose=True
-		)
+    @agent
+    def crypto_market_strategist(self) -> Agent:
+        return Agent(
+            config=self.agents_config["crypto_market_strategist"],
+            verbose=True,
+            allow_delegation=True,
+            tools=[self.search_tool, self.serper_tool],
+            llm=llm,
+        )
 
-	# To learn more about structured task outputs, 
-	# task dependencies, and task callbacks, check out the documentation:
-	# https://docs.crewai.com/concepts/tasks#overview-of-a-task
-	@task
-	def research_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['research_task'],
-		)
+    @agent
+    def sentiment_analysis_specialist(self) -> Agent:
+        return Agent(
+            config=self.agents_config["sentiment_analysis_specialist"],
+            verbose=True,
+            allow_delegation=True,
+            tools=[self.search_tool, self.serper_tool],
+            llm=llm,
+        )
 
-	@task
-	def reporting_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
-		)
+    @agent
+    def risk_management_consultant(self) -> Agent:
+        return Agent(
+            config=self.agents_config["risk_management_consultant"],
+            verbose=True,
+            allow_delegation=True,
+            tools=[self.search_tool, self.serper_tool],
+            llm=llm,
+        )
 
-	@crew
-	def crew(self) -> Crew:
-		"""Creates the FinancialAgent crew"""
-		# To learn how to add knowledge sources to your crew, check out the documentation:
-		# https://docs.crewai.com/concepts/knowledge#what-is-knowledge
+    @agent
+    def technical_market_analyst(self) -> Agent:
+        return Agent(
+            config=self.agents_config["technical_market_analyst"],
+            verbose=True,
+            allow_delegation=True,
+            tools=[self.search_tool, self.serper_tool],
+            llm=llm,
+        )
 
-		return Crew(
-			agents=self.agents, # Automatically created by the @agent decorator
-			tasks=self.tasks, # Automatically created by the @task decorator
-			process=Process.sequential,
-			verbose=True,
-			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
-		)
+    @agent
+    def on_chain_data_specialist(self) -> Agent:
+        return Agent(
+            config=self.agents_config["on_chain_data_specialist"],
+            verbose=True,
+            allow_delegation=True,
+            tools=[self.search_tool, self.serper_tool],
+            llm=llm,
+        )
+
+    @agent
+    def economic_trends_advisor(self) -> Agent:
+        return Agent(
+            config=self.agents_config["economic_trends_advisor"],
+            verbose=True,
+            allow_delegation=True,
+            tools=[self.search_tool, self.serper_tool],
+            llm=llm,
+        )
+
+    @task
+    def market_analysis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["market_analysis_task"],
+        )
+
+    @task
+    def sentiment_analysis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["sentiment_analysis_task"],
+            async_execution=True,
+        )
+
+    @task
+    def risk_assessment_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["risk_assessment_task"],
+            async_execution=True,
+        )
+
+    @task
+    def technical_analysis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["technical_analysis_task"],
+            async_execution=True,
+        )
+
+    @task
+    def on_chain_analysis_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["on_chain_analysis_task"],
+            async_execution=True,
+        )
+
+    @task
+    def economic_impact_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["economic_impact_task"],
+            async_execution=True,
+        )
+
+    @task
+    def investment_recommendation_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["investment_recommendation_task"],
+            output_file="Recommendation.md",
+        )
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the FinancialAgent crew"""
+
+        return Crew(
+            agents=self.agents,  # Automatically created by the @agent decorator
+            tasks=self.tasks,  # Automatically created by the @task decorator
+            process=Process.hierarchical,
+            manager_llm=llm,
+            verbose=True,
+            # memory=True,
+        )
