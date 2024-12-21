@@ -3,6 +3,7 @@ market_analysis_task:
     Analyze the cryptocurrency market for {crypto_coin}. 
     Focus on identifying trends, price movements, and market dynamics relevant to {investment_strategy} 
     (e.g., day trading, 1-month investment, 3-month investment).
+    Look at it from the date {date}.
   expected_output: >
     A detailed summary of the current market trends for {crypto_coin}, including:
     - Key price levels (support and resistance)
@@ -14,6 +15,7 @@ sentiment_analysis_task:
   description: >
     Conduct sentiment analysis for {crypto_coin} by reviewing social media, forums, 
     and news. Identify positive, negative, or neutral trends in market sentiment.
+    Look at it from the date {date}.
   expected_output: >
     A summary of sentiment analysis for {crypto_coin}, including:
     - Sentiment scores (positive, neutral, negative)
@@ -25,6 +27,7 @@ risk_assessment_task:
   description: >
     Assess the risk profile of investing in {crypto_coin} given the {investment_strategy}.
     Evaluate volatility, liquidity, and overall risk factors.
+    Look at it from the date {date}.
   expected_output: >
     A risk assessment report including:
     - Volatility analysis
@@ -37,6 +40,7 @@ technical_analysis_task:
     Perform technical analysis for {crypto_coin} using indicators like RSI, MACD, 
     Fibonacci retracement, and moving averages. Focus on trends that align with 
     {investment_strategy}.
+    Look at it from the date {date}.
   expected_output: >
     A technical analysis report including:
     - Key technical indicators and their current values
@@ -44,27 +48,29 @@ technical_analysis_task:
     - Predicted short-term and long-term price movements
   agent: technical_market_analyst
 
-on_chain_analysis_task:
-  description: >
-    Analyze blockchain activity for {crypto_coin}, including whale movements, 
-    token flows, and any smart contract interactions that could influence the price.
-  expected_output: >
-    A detailed on-chain analysis report with:
-    - Notable blockchain activity trends
-    - Significant transactions or wallet movements
-    - Impact on the price or market sentiment
-  agent: on_chain_data_specialist
+# on_chain_analysis_task:
+#   description: >
+#     Analyze blockchain activity for {crypto_coin}, including whale movements, 
+#     token flows, and any smart contract interactions that could influence the price.
+#     Look at it from the date {date}.
+#   expected_output: >
+#     A detailed on-chain analysis report with:
+#     - Notable blockchain activity trends
+#     - Significant transactions or wallet movements
+#     - Impact on the price or market sentiment
+#   agent: on_chain_data_specialist
 
-economic_impact_task:
-  description: >
-    Assess macroeconomic and geopolitical factors that could influence {crypto_coin}'s price. 
-    Focus on external factors like regulation, global markets, and technological developments.
-  expected_output: >
-    A macroeconomic analysis report covering:
-    - Geopolitical or regulatory risks
-    - Broader economic trends affecting cryptocurrency markets
-    - Strategic advice considering external factors
-  agent: economic_trends_advisor
+# economic_impact_task:
+#   description: >
+#     Assess macroeconomic and geopolitical factors that could influence {crypto_coin}'s price. 
+#     Focus on external factors like regulation, global markets, and technological developments.
+#     Look at it from the date {date}.
+#   expected_output: >
+#     A macroeconomic analysis report covering:
+#     - Geopolitical or regulatory risks
+#     - Broader economic trends affecting cryptocurrency markets
+#     - Strategic advice considering external factors
+#   agent: economic_trends_advisor
 
 investment_recommendation_task:
   description: >
