@@ -82,4 +82,5 @@ investment_recommendation_task:
     - Whether to invest or not (with reasoning)
     - Ideal buy and sell price ranges based on analysis
     - Tailored advice for {investment_strategy} (e.g., day trading, 1-month investment)
+    - Final advice on whether to invest today or not based on all indicators
   agent: crypto_market_strategist
