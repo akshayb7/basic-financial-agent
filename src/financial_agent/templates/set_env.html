@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Environment Variables</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label, input {
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form action="/set-env" method="post">
+        <h1>Set Environment Variables</h1>
+        <label for="azure_openai_deployment">Azure OpenAI Deployment:</label>
+        <input type="text" id="azure_openai_deployment" name="azure_openai_deployment" required>
+
+        <label for="azure_openai_key">Azure OpenAI Key:</label>
+        <input type="text" id="azure_openai_key" name="azure_openai_key" required>
+
+        <label for="azure_openai_version">Azure OpenAI Version:</label>
+        <input type="text" id="azure_openai_version" name="azure_openai_version" required>
+
+        <label for="azure_openai_endpoint">Azure OpenAI Endpoint:</label>
+        <input type="text" id="azure_openai_endpoint" name="azure_openai_endpoint" required>
+
+        <input type="submit" value="Save and Continue">
+    </form>
+</body>
+</html>

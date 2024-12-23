@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Financial Agent</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label, select {
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form action="/run" method="post">
+        <h1>Run Financial Agent</h1>
+        <label for="crypto_coin">Crypto Coin:</label>
+        <select id="crypto_coin" name="crypto_coin">
+            {% for coin in crypto_coins %}
+            <option value="{{ coin }}">{{ coin }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="investment_strategy">Investment Strategy:</label>
+        <select id="investment_strategy" name="investment_strategy">
+            {% for strategy in investment_strategies %}
+            <option value="{{ strategy }}">{{ strategy }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Run">
+    </form>
+</body>
+</html>
