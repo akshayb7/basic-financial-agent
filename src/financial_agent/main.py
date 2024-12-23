@@ -1,26 +1,20 @@
 #!/usr/bin/env python
-import sys
-import warnings
+from fastapi import FastAPI
 from datetime import datetime
-
 from financial_agent.crew import FinancialAgent
 
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+app = FastAPI()
 
-# This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
-# Replace with inputs you want to test with, it will automatically
-# interpolate any tasks and agents information
-
-
-def run():
+@app.post("/run")
+def run(crypto_coin: str = "ETH", investment_strategy: str = "Day Trading"):
     """
     Run the crew.
     """
     todays_date = datetime.now().strftime("%Y-%m-%d")
     inputs = {
-        "crypto_coin": "ETH",
-        "investment_strategy": "Day Trading",
+        "crypto_coin": crypto_coin,
+        "investment_strategy": investment_strategy,
         "date": f"{todays_date}",
     }
     FinancialAgent().crew().kickoff(inputs=inputs)
+    return {"status": "success", "inputs": inputs}
