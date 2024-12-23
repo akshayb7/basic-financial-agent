@@ -10,13 +10,16 @@ from financial_agent.crew import FinancialAgent
 
 app = FastAPI()
 
+
 class RunRequest(BaseModel):
     crypto_coin: str = "ETH"
     investment_strategy: str = "Day Trading"
 
+
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.post("/run")
 def run(request: RunRequest):
