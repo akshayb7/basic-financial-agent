@@ -12,7 +12,6 @@ llm = LLM(
     api_version=os.getenv("AZURE_OPENAI_VERSION"),
     base_url=os.getenv("AZURE_OPENAI_ENDPOINT"),
 )
-# llm = LLM(model="ollama/llama3.1", base_url="http://localhost:11434")
 
 
 @CrewBase
@@ -65,26 +64,6 @@ class FinancialAgent:
             llm=llm,
         )
 
-    # @agent
-    # def on_chain_data_specialist(self) -> Agent:
-    #     return Agent(
-    #         config=self.agents_config["on_chain_data_specialist"],
-    #         verbose=True,
-    #         allow_delegation=True,
-    #         tools=[self.search_tool, self.serper_tool],
-    #         llm=llm,
-    #     )
-
-    # @agent
-    # def economic_trends_advisor(self) -> Agent:
-    #     return Agent(
-    #         config=self.agents_config["economic_trends_advisor"],
-    #         verbose=True,
-    #         allow_delegation=True,
-    #         tools=[self.search_tool, self.serper_tool],
-    #         llm=llm,
-    #     )
-
     @task
     def market_analysis_task(self) -> Task:
         return Task(
@@ -117,20 +96,6 @@ class FinancialAgent:
             output_file="reports/Technical_Analysis.md",
         )
 
-    # @task
-    # def on_chain_analysis_task(self) -> Task:
-    #     return Task(
-    #         config=self.tasks_config["on_chain_analysis_task"],
-    #         async_execution=True,
-    #     )
-
-    # @task
-    # def economic_impact_task(self) -> Task:
-    #     return Task(
-    #         config=self.tasks_config["economic_impact_task"],
-    #         async_execution=True,
-    #     )
-
     @task
     def investment_recommendation_task(self) -> Task:
         return Task(
@@ -154,5 +119,4 @@ class FinancialAgent:
             process=Process.hierarchical,
             manager_llm=llm,
             verbose=True,
-            # memory=True,
         )

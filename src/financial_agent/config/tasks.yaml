@@ -48,29 +48,6 @@ technical_analysis_task:
     - Predicted short-term and long-term price movements
   agent: technical_market_analyst
 
-# on_chain_analysis_task:
-#   description: >
-#     Analyze blockchain activity for {crypto_coin}, including whale movements, 
-#     token flows, and any smart contract interactions that could influence the price.
-#     Look at it from the date {date}.
-#   expected_output: >
-#     A detailed on-chain analysis report with:
-#     - Notable blockchain activity trends
-#     - Significant transactions or wallet movements
-#     - Impact on the price or market sentiment
-#   agent: on_chain_data_specialist
-
-# economic_impact_task:
-#   description: >
-#     Assess macroeconomic and geopolitical factors that could influence {crypto_coin}'s price. 
-#     Focus on external factors like regulation, global markets, and technological developments.
-#     Look at it from the date {date}.
-#   expected_output: >
-#     A macroeconomic analysis report covering:
-#     - Geopolitical or regulatory risks
-#     - Broader economic trends affecting cryptocurrency markets
-#     - Strategic advice considering external factors
-#   agent: economic_trends_advisor
 
 investment_recommendation_task:
   description: >
